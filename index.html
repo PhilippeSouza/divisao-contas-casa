@@ -11,11 +11,10 @@
     :root {
       --bg: #090d16;
       --card-bg: #131c2e;
-      --card-subtle: #1a253c;
+      --card-subtle: #192338;
       --border: #23334d;
       --border-focus: #38bdf8;
       --primary: #38bdf8;
-      --primary-hover: #0ea5e9;
       --p1-color: #38bdf8;
       --p1-bg: rgba(56, 189, 248, 0.12);
       --p2-color: #f472b6;
@@ -24,6 +23,7 @@
       --text-muted: #94a3b8;
       --text-dim: #64748b;
       --success: #34d399;
+      --success-bg: rgba(52, 211, 153, 0.12);
       --danger: #f87171;
       --danger-bg: rgba(248, 113, 113, 0.12);
       --radius-lg: 16px;
@@ -44,7 +44,7 @@
       color: var(--text);
       display: flex;
       justify-content: center;
-      padding: 24px 16px 60px;
+      padding: 20px 16px 60px;
       min-height: 100vh;
     }
 
@@ -53,13 +53,13 @@
       max-width: 680px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     /* Header */
     header {
       text-align: center;
-      padding: 8px 0;
+      padding: 6px 0 2px;
     }
 
     .badge {
@@ -77,18 +77,18 @@
     }
 
     header h1 {
-      font-size: 1.7rem;
+      font-size: 1.65rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background: linear-gradient(to right, #ffffff, #94a3b8);
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     header p {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 6px;
+      font-size: 0.88rem;
+      margin-top: 4px;
     }
 
     /* Month Selector */
@@ -100,6 +100,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 10px 16px;
+      box-shadow: var(--shadow);
     }
 
     .month-nav-btn {
@@ -113,7 +114,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.1rem;
       transition: all 0.2s;
     }
 
@@ -124,10 +125,13 @@
     }
 
     .current-month-display {
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 800;
+      font-size: 1.05rem;
       text-transform: capitalize;
       letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* Cards */
@@ -135,73 +139,52 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px 20px;
       box-shadow: var(--shadow);
     }
 
     .card-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    /* Split Configuration */
-    .mode-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    .step-tag {
       background: var(--card-subtle);
-      padding: 4px;
-      border-radius: var(--radius-md);
-      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      margin-right: 6px;
+      text-transform: uppercase;
     }
 
-    .mode-tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 8px 12px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .mode-tab-btn.active {
-      background: var(--card-bg);
-      color: var(--text);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    }
-
-    .couple-grid {
+    /* Incomes step */
+    .couple-income-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .partner-card {
       background: var(--card-subtle);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 12px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      transition: border-color 0.2s;
     }
 
     .partner-card.p1 { border-top: 3px solid var(--p1-color); }
     .partner-card.p2 { border-top: 3px solid var(--p2-color); }
-
-    .partner-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
 
     .partner-name-input {
       background: transparent;
@@ -219,92 +202,7 @@
       border-color: var(--primary);
     }
 
-    .partner-pct-display {
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-    .p1 .partner-pct-display { color: var(--p1-color); }
-    .p2 .partner-pct-display { color: var(--p2-color); }
-
-    .slider-container {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .slider-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 8px;
-      border-radius: 9999px;
-      background: linear-gradient(to right, var(--p1-color) var(--slider-pct, 70%), var(--p2-color) var(--slider-pct, 70%));
-      outline: none;
-      cursor: pointer;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #ffffff;
-      border: 2px solid var(--card-bg);
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      cursor: pointer;
-    }
-
-    .quick-presets {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .preset-btn {
-      background: var(--card-subtle);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: var(--radius-sm);
-      padding: 4px 10px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .preset-btn:hover {
-      background: var(--border);
-      color: var(--text);
-    }
-
-    /* Salary Input Mode */
-    .salary-inputs {
-      display: none;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .salary-inputs.active {
-      display: grid;
-    }
-
-    .input-field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .input-field-group label {
+    .input-label {
       font-size: 0.75rem;
       color: var(--text-muted);
       font-weight: 600;
@@ -331,8 +229,8 @@
       border-radius: var(--radius-sm);
       padding: 8px 8px 8px 34px;
       color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 700;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -341,12 +239,113 @@
       border-color: var(--border-focus);
     }
 
-    /* Accounts List */
+    /* Proportion Bar */
+    .proportion-preview {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .prop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .prop-bar-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: #0f172a;
+      display: flex;
+    }
+
+    .prop-bar-p1 {
+      background: var(--p1-color);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .prop-bar-p2 {
+      background: var(--p2-color);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .prop-subtext {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Manual Override Toggle */
+    .manual-toggle-wrap {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .manual-toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 0.74rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .manual-toggle-btn:hover {
+      color: var(--primary);
+    }
+
+    .manual-slider-area {
+      display: none;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .manual-slider-area.active {
+      display: block;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 9999px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      cursor: pointer;
+    }
+
+    /* Bills Section */
     .bills-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .bill-item {
@@ -402,6 +401,7 @@
       justify-content: center;
       border-radius: var(--radius-sm);
       transition: all 0.2s;
+      font-size: 0.9rem;
     }
 
     .delete-bill-btn:hover {
@@ -414,9 +414,9 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.28);
       border-radius: var(--radius-sm);
-      padding: 8px 10px;
+      padding: 8px 12px;
       font-size: 0.78rem;
     }
 
@@ -457,19 +457,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 14px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
       margin-bottom: 14px;
     }
 
     .total-banner span {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
     }
 
     .total-banner strong {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: #ffffff;
     }
@@ -478,18 +478,18 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .share-box {
       background: var(--card-subtle);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 16px 14px;
+      padding: 14px 12px;
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .share-box.p1 {
@@ -513,7 +513,7 @@
     .share-box.p2 .share-tag { color: var(--p2-color); }
 
     .share-value {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.02em;
@@ -522,11 +522,22 @@
     .share-pct-badge {
       display: inline-block;
       align-self: center;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       padding: 2px 8px;
       border-radius: 9999px;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       font-weight: 700;
+      color: var(--text);
+    }
+
+    .leftover-badge {
+      font-size: 0.74rem;
+      margin-top: 4px;
+      padding: 4px 6px;
+      border-radius: var(--radius-sm);
+      background: rgba(52, 211, 153, 0.1);
+      color: var(--success);
+      font-weight: 600;
     }
 
     /* Actions and share */
@@ -552,7 +563,7 @@
 
     .action-btn.whatsapp {
       background: #25d366;
-      color: #0b2b16;
+      color: #072611;
     }
     .action-btn.whatsapp:hover {
       background: #20bd5a;
@@ -569,9 +580,9 @@
 
     /* Table preview toggle */
     .table-container {
-      margin-top: 16px;
+      margin-top: 14px;
       border-top: 1px solid var(--border);
-      padding-top: 14px;
+      padding-top: 12px;
     }
 
     .detailed-table {
@@ -598,8 +609,8 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--text);
-      color: var(--bg);
+      background: #ffffff;
+      color: #090d16;
       padding: 10px 20px;
       border-radius: 9999px;
       font-weight: 700;
@@ -615,10 +626,9 @@
     }
 
     @media (max-width: 520px) {
-      body { padding: 16px 12px 40px; }
+      body { padding: 14px 10px 40px; }
       .shares { grid-template-columns: 1fr; }
-      .couple-grid { grid-template-columns: 1fr; }
-      .salary-inputs { grid-template-columns: 1fr; }
+      .couple-income-grid { grid-template-columns: 1fr; }
       .summary-actions { flex-direction: column; }
     }
   </style>
@@ -629,99 +639,110 @@
     <header>
       <div class="badge">Finanças do Casal</div>
       <h1>Divisão Justa de Contas</h1>
-      <p>Defina a proporção e saiba o valor individual de cada conta por mês.</p>
+      <p>Coloque o quanto cada um recebeu no mês para calcular a divisão justa e o valor de cada conta.</p>
     </header>
 
     <!-- Month Navigation -->
     <div class="month-bar">
       <button class="month-nav-btn" id="prev-month" title="Mês anterior">←</button>
-      <div class="current-month-display" id="month-display">Mês / Ano</div>
+      <div class="current-month-display" id="month-display">
+        <span>📅</span> <span id="month-name-text">Mês / Ano</span>
+      </div>
       <button class="month-nav-btn" id="next-month" title="Próximo mês">→</button>
     </div>
 
-    <!-- Proportion / Fairness Configuration -->
+    <!-- Step 1: Incomes for current month -->
     <div class="card">
       <div class="card-title">
-        <span>Proporção da Divisão</span>
-        <span style="font-size: 0.78rem; font-weight: normal; color: var(--text-muted);" id="split-mode-label">Ajuste manual</span>
+        <div>
+          <span class="step-tag">Passo 1</span>
+          <span>Salário / Renda Recebida neste Mês</span>
+        </div>
+        <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-muted);">Muda a cada mês</span>
       </div>
 
-      <div class="mode-tabs">
-        <button class="mode-tab-btn active" id="tab-pct" onclick="setMode('pct')">Por Porcentagem</button>
-        <button class="mode-tab-btn" id="tab-income" onclick="setMode('income')">Proporcional à Renda</button>
-      </div>
-
-      <!-- Partner Cards (Names and current %) -->
-      <div class="couple-grid">
+      <div class="couple-income-grid">
         <div class="partner-card p1">
-          <div class="partner-header">
-            <input type="text" id="name-p1" class="partner-name-input" value="Você" placeholder="Nome" />
-            <div class="partner-pct-display" id="display-p1-pct">70%</div>
-          </div>
-          <div class="input-field-group salary-group" style="display: none;">
-            <label>Renda Líquida</label>
-            <div class="currency-input-wrap">
-              <span>R$</span>
-              <input type="number" id="income-p1" placeholder="0,00" step="100" />
-            </div>
+          <input type="text" id="name-p1" class="partner-name-input" value="Você" placeholder="Nome" />
+          <div class="input-label">Quanto recebeu este mês?</div>
+          <div class="currency-input-wrap">
+            <span>R$</span>
+            <input type="number" id="income-p1" placeholder="Ex: 5000" step="50" />
           </div>
         </div>
 
         <div class="partner-card p2">
-          <div class="partner-header">
-            <input type="text" id="name-p2" class="partner-name-input" value="Esposa" placeholder="Nome" />
-            <div class="partner-pct-display" id="display-p2-pct">30%</div>
-          </div>
-          <div class="input-field-group salary-group" style="display: none;">
-            <label>Renda Líquida</label>
-            <div class="currency-input-wrap">
-              <span>R$</span>
-              <input type="number" id="income-p2" placeholder="0,00" step="100" />
-            </div>
+          <input type="text" id="name-p2" class="partner-name-input" value="Esposa" placeholder="Nome" />
+          <div class="input-label">Quanto recebeu este mês?</div>
+          <div class="currency-input-wrap">
+            <span>R$</span>
+            <input type="number" id="income-p2" placeholder="Ex: 3000" step="50" />
           </div>
         </div>
       </div>
 
-      <!-- Slider for direct percentage -->
-      <div id="pct-controls">
-        <div class="slider-container">
-          <input type="range" id="split-slider" min="0" max="100" value="70" step="1" />
-          <div class="slider-labels">
-            <span id="slider-label-p1">Você: 70%</span>
-            <span id="slider-label-p2">Esposa: 30%</span>
-          </div>
+      <!-- Proportion Visualizer -->
+      <div class="proportion-preview">
+        <div class="prop-header">
+          <span style="color: var(--p1-color);" id="prop-text-p1">Você: 50%</span>
+          <span style="color: var(--text-muted); font-size: 0.75rem;">Divisão Justa Automática</span>
+          <span style="color: var(--p2-color);" id="prop-text-p2">Esposa: 50%</span>
         </div>
+        <div class="prop-bar-track">
+          <div class="prop-bar-p1" id="prop-bar-p1" style="width: 50%;"></div>
+          <div class="prop-bar-p2" id="prop-bar-p2" style="width: 50%;"></div>
+        </div>
+        <div class="prop-subtext">
+          <span id="subtext-total-income">Renda familiar: R$ 0,00</span>
+          <span id="subtext-status">Proporcional aos ganhos</span>
+        </div>
+      </div>
 
-        <div class="quick-presets">
-          <span style="font-size: 0.75rem; color: var(--text-dim); margin-right: 4px; align-self: center;">Atalhos:</span>
-          <button class="preset-btn" onclick="applyPreset(50)">50% / 50%</button>
-          <button class="preset-btn" onclick="applyPreset(60)">60% / 40%</button>
-          <button class="preset-btn" onclick="applyPreset(70)">70% / 30%</button>
-          <button class="preset-btn" onclick="applyPreset(80)">80% / 20%</button>
+      <div class="manual-toggle-wrap">
+        <button class="manual-toggle-btn" id="toggle-manual-btn" onclick="toggleManualOverride()">
+          ⚙️ Ajustar porcentagem manualmente neste mês
+        </button>
+      </div>
+
+      <div class="manual-slider-area" id="manual-slider-area">
+        <div style="display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 4px;">
+          <span>Porcentagem manual</span>
+          <span id="slider-manual-val">50% / 50%</span>
         </div>
+        <input type="range" id="split-slider" min="0" max="100" value="50" step="1" />
       </div>
     </div>
 
-    <!-- Bills List -->
+    <!-- Step 2: Bills List -->
     <div class="card">
       <div class="card-title">
-        <span>Contas do Mês</span>
+        <div>
+          <span class="step-tag">Passo 2</span>
+          <span>Contas da Casa deste Mês</span>
+        </div>
         <span style="font-size: 0.78rem; font-weight: normal; color: var(--text-muted);" id="bills-count">0 contas</span>
       </div>
 
       <div class="bills-list" id="bills-container">
-        <!-- Bills rendered here via JS -->
+        <!-- Rendered by JS -->
       </div>
 
       <button class="add-bill-btn" id="add-bill-btn">
-        <span style="font-size: 1.2rem; line-height: 1;">+</span> Adicionar Nova Conta
+        <span style="font-size: 1.2rem; line-height: 1;">+</span> Adicionar Conta
       </button>
     </div>
 
-    <!-- Monthly Summary -->
+    <!-- Step 3: Monthly Summary -->
     <div class="card">
+      <div class="card-title">
+        <div>
+          <span class="step-tag">Passo 3</span>
+          <span>Resultado Final do Mês</span>
+        </div>
+      </div>
+
       <div class="total-banner">
-        <span>Total das Contas do Mês</span>
+        <span>Total das Contas a Pagar</span>
         <strong id="total-geral">R$ 0,00</strong>
       </div>
 
@@ -729,13 +750,15 @@
         <div class="share-box p1">
           <div class="share-tag" id="summary-tag-p1">Você</div>
           <div class="share-value" id="total-p1">R$ 0,00</div>
-          <div class="share-pct-badge" id="badge-p1">70% do total</div>
+          <div class="share-pct-badge" id="badge-p1">50% do total</div>
+          <div class="leftover-badge" id="leftover-p1" style="display: none;">Sobra: R$ 0,00</div>
         </div>
 
         <div class="share-box p2">
           <div class="share-tag" id="summary-tag-p2">Esposa</div>
           <div class="share-value" id="total-p2">R$ 0,00</div>
-          <div class="share-pct-badge" id="badge-p2">30% do total</div>
+          <div class="share-pct-badge" id="badge-p2">50% do total</div>
+          <div class="leftover-badge" id="leftover-p2" style="display: none;">Sobra: R$ 0,00</div>
         </div>
       </div>
 
@@ -750,12 +773,12 @@
 
       <!-- Individual breakdown table -->
       <div class="table-container">
-        <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Detalhamento Conta por Conta</div>
+        <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Divisão Individual por Conta</div>
         <table class="detailed-table">
           <thead>
             <tr>
               <th>Conta</th>
-              <th>Total</th>
+              <th>Valor Total</th>
               <th id="th-name-p1">Você</th>
               <th id="th-name-p2">Esposa</th>
             </tr>
@@ -774,9 +797,8 @@
     // State management
     const state = {
       currentDate: new Date(),
-      mode: 'pct', // 'pct' | 'income'
-      p1: { name: 'Você', pct: 70, income: 0 },
-      p2: { name: 'Esposa', pct: 30, income: 0 },
+      p1: { name: 'Você' },
+      p2: { name: 'Esposa' },
       monthsData: {}
     };
 
@@ -797,38 +819,44 @@
       return (Number(val) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
-    // Load from LocalStorage
+    function getCurrentMonthData() {
+      const key = getMonthKey(state.currentDate);
+      if (!state.monthsData[key]) {
+        state.monthsData[key] = {
+          incomeP1: null,
+          incomeP2: null,
+          isManual: false,
+          manualP1Pct: 50,
+          bills: JSON.parse(JSON.stringify(DEFAULT_BILLS))
+        };
+      }
+      return state.monthsData[key];
+    }
+
     function loadSavedState() {
       try {
-        const saved = localStorage.getItem('divisao_contas_app_v1');
+        const saved = localStorage.getItem('divisao_contas_app_v2');
         if (saved) {
           const parsed = JSON.parse(saved);
           if (parsed.p1) state.p1 = parsed.p1;
           if (parsed.p2) state.p2 = parsed.p2;
-          if (parsed.mode) state.mode = parsed.mode;
           if (parsed.monthsData) state.monthsData = parsed.monthsData;
         }
       } catch (e) {
-        console.error('Erro ao carregar dados:', e);
+        console.error('Erro ao carregar:', e);
       }
-
-      // Initialize current month if empty
-      const key = getMonthKey(state.currentDate);
-      if (!state.monthsData[key]) {
-        state.monthsData[key] = JSON.parse(JSON.stringify(DEFAULT_BILLS));
-      }
+      getCurrentMonthData();
     }
 
     function saveState() {
       try {
-        localStorage.setItem('divisao_contas_app_v1', JSON.stringify({
+        localStorage.setItem('divisao_contas_app_v2', JSON.stringify({
           p1: state.p1,
           p2: state.p2,
-          mode: state.mode,
           monthsData: state.monthsData
         }));
       } catch (e) {
-        console.error('Erro ao salvar dados:', e);
+        console.error('Erro ao salvar:', e);
       }
     }
 
@@ -840,101 +868,99 @@
       ];
       const m = monthNames[state.currentDate.getMonth()];
       const y = state.currentDate.getFullYear();
-      document.getElementById('month-display').textContent = `${m} de ${y}`;
+      document.getElementById('month-name-text').textContent = `${m} de ${y}`;
     }
 
     function changeMonth(diff) {
       state.currentDate.setMonth(state.currentDate.getMonth() + diff);
       const key = getMonthKey(state.currentDate);
+      
       if (!state.monthsData[key]) {
-        // Clone defaults or previous month structure
         const prevKey = getMonthKey(new Date(state.currentDate.getFullYear(), state.currentDate.getMonth() - diff, 1));
-        if (state.monthsData[prevKey]) {
-          // Carry over bill names with 0 value (except rent)
-          state.monthsData[key] = state.monthsData[prevKey].map(b => ({
+        const prevData = state.monthsData[prevKey];
+        state.monthsData[key] = {
+          incomeP1: null, // Each month they put what they earned
+          incomeP2: null,
+          isManual: false,
+          manualP1Pct: 50,
+          bills: prevData ? prevData.bills.map(b => ({
             id: String(Date.now() + Math.random()),
             name: b.name,
             value: b.name.toLowerCase().includes('aluguel') ? b.value : 0
-          }));
-        } else {
-          state.monthsData[key] = JSON.parse(JSON.stringify(DEFAULT_BILLS));
-        }
+          })) : JSON.parse(JSON.stringify(DEFAULT_BILLS))
+        };
       }
+
       updateMonthDisplay();
+      syncInputsFromCurrentMonth();
       renderBills();
       calculate();
       saveState();
     }
 
-    // Mode management
-    function setMode(newMode) {
-      state.mode = newMode;
-      document.getElementById('tab-pct').classList.toggle('active', newMode === 'pct');
-      document.getElementById('tab-income').classList.toggle('active', newMode === 'income');
-      
-      const salaryGroups = document.querySelectorAll('.salary-group');
-      salaryGroups.forEach(el => el.style.display = newMode === 'income' ? 'flex' : 'none');
-      
-      document.getElementById('pct-controls').style.display = newMode === 'pct' ? 'block' : 'none';
-      document.getElementById('split-mode-label').textContent = newMode === 'pct' ? 'Ajuste manual' : 'Cálculo por renda';
-      
-      if (newMode === 'income') {
-        calcPctFromIncome();
+    // Calculate percentage based on current month's incomes or manual slider
+    function getPercentages() {
+      const mData = getCurrentMonthData();
+      if (mData.isManual) {
+        const p1 = mData.manualP1Pct ?? 50;
+        return { p1, p2: 100 - p1 };
       }
-      calculate();
-      saveState();
-    }
 
-    function calcPctFromIncome() {
-      const inc1 = parseFloat(document.getElementById('income-p1').value) || 0;
-      const inc2 = parseFloat(document.getElementById('income-p2').value) || 0;
+      const inc1 = parseFloat(mData.incomeP1) || 0;
+      const inc2 = parseFloat(mData.incomeP2) || 0;
       const totalIncome = inc1 + inc2;
 
       if (totalIncome > 0) {
-        state.p1.pct = Math.round((inc1 / totalIncome) * 100);
-        state.p2.pct = 100 - state.p1.pct;
+        const p1 = Math.round((inc1 / totalIncome) * 100);
+        return { p1, p2: 100 - p1 };
       }
-      state.p1.income = inc1;
-      state.p2.income = inc2;
-      updatePctDisplays();
+
+      // Default if incomes not entered yet
+      return { p1: 50, p2: 50 };
     }
 
-    function updatePctDisplays() {
-      document.getElementById('display-p1-pct').textContent = `${state.p1.pct}%`;
-      document.getElementById('display-p2-pct').textContent = `${state.p2.pct}%`;
-      document.getElementById('slider-label-p1').textContent = `${state.p1.name}: ${state.p1.pct}%`;
-      document.getElementById('slider-label-p2').textContent = `${state.p2.name}: ${state.p2.pct}%`;
-      document.getElementById('split-slider').value = state.p1.pct;
-      document.documentElement.style.setProperty('--slider-pct', `${state.p1.pct}%`);
+    function syncInputsFromCurrentMonth() {
+      const mData = getCurrentMonthData();
+      document.getElementById('income-p1').value = mData.incomeP1 !== null ? mData.incomeP1 : '';
+      document.getElementById('income-p2').value = mData.incomeP2 !== null ? mData.incomeP2 : '';
+      
+      const manualArea = document.getElementById('manual-slider-area');
+      const toggleBtn = document.getElementById('toggle-manual-btn');
+      
+      if (mData.isManual) {
+        manualArea.classList.add('active');
+        toggleBtn.textContent = '🔄 Voltar para cálculo automático por salário';
+        document.getElementById('split-slider').value = mData.manualP1Pct ?? 50;
+        document.getElementById('slider-manual-val').textContent = `${mData.manualP1Pct}% / ${100 - mData.manualP1Pct}%`;
+      } else {
+        manualArea.classList.remove('active');
+        toggleBtn.textContent = '⚙️ Ajustar porcentagem manualmente neste mês';
+      }
     }
 
-    function applyPreset(p1Pct) {
-      state.p1.pct = p1Pct;
-      state.p2.pct = 100 - p1Pct;
-      updatePctDisplays();
+    function toggleManualOverride() {
+      const mData = getCurrentMonthData();
+      mData.isManual = !mData.isManual;
+      if (mData.isManual && mData.manualP1Pct === undefined) {
+        const { p1 } = getPercentages();
+        mData.manualP1Pct = p1;
+      }
+      syncInputsFromCurrentMonth();
       calculate();
       saveState();
     }
 
-    // Bills handling
-    function getCurrentBills() {
-      const key = getMonthKey(state.currentDate);
-      if (!state.monthsData[key]) {
-        state.monthsData[key] = JSON.parse(JSON.stringify(DEFAULT_BILLS));
-      }
-      return state.monthsData[key];
-    }
-
     function renderBills() {
-      const bills = getCurrentBills();
+      const mData = getCurrentMonthData();
       const container = document.getElementById('bills-container');
       container.innerHTML = '';
 
-      document.getElementById('bills-count').textContent = `${bills.length} conta${bills.length === 1 ? '' : 's'}`;
+      const { p1: p1Pct, p2: p2Pct } = getPercentages();
+      document.getElementById('bills-count').textContent = `${mData.bills.length} conta${mData.bills.length === 1 ? '' : 's'}`;
 
-      bills.forEach((bill, index) => {
+      mData.bills.forEach((bill, index) => {
         const val = parseFloat(bill.value) || 0;
-        const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
+        const p1Val = Math.round(val * (p1Pct / 100) * 100) / 100;
         const p2Val = Math.round((val - p1Val) * 100) / 100;
 
         const billEl = document.createElement('div');
@@ -950,11 +976,11 @@
           </div>
           <div class="bill-breakdown">
             <div class="bill-breakdown-col p1">
-              <span>${escapeHtml(state.p1.name)} (${state.p1.pct}%):</span>
+              <span>${escapeHtml(state.p1.name)} (${p1Pct}%):</span>
               <strong>${formatCurrency(p1Val)}</strong>
             </div>
             <div class="bill-breakdown-col p2">
-              <span>${escapeHtml(state.p2.name)} (${state.p2.pct}%):</span>
+              <span>${escapeHtml(state.p2.name)} (${p2Pct}%):</span>
               <strong>${formatCurrency(p2Val)}</strong>
             </div>
           </div>
@@ -970,26 +996,26 @@
     }
 
     function updateBillName(index, name) {
-      const bills = getCurrentBills();
-      if (bills[index]) {
-        bills[index].name = name;
+      const mData = getCurrentMonthData();
+      if (mData.bills[index]) {
+        mData.bills[index].name = name;
         calculate();
         saveState();
       }
     }
 
     function updateBillValue(index, val) {
-      const bills = getCurrentBills();
-      if (bills[index]) {
-        bills[index].value = parseFloat(val) || 0;
+      const mData = getCurrentMonthData();
+      if (mData.bills[index]) {
+        mData.bills[index].value = parseFloat(val) || 0;
         calculate();
         saveState();
       }
     }
 
     function addBill() {
-      const bills = getCurrentBills();
-      bills.push({
+      const mData = getCurrentMonthData();
+      mData.bills.push({
         id: String(Date.now()),
         name: 'Nova Conta',
         value: 0
@@ -1000,99 +1026,153 @@
     }
 
     function deleteBill(index) {
-      const bills = getCurrentBills();
-      bills.splice(index, 1);
+      const mData = getCurrentMonthData();
+      mData.bills.splice(index, 1);
       renderBills();
       calculate();
       saveState();
     }
 
-    // Calculations
+    // Calculations & UI Update
     function calculate() {
-      const bills = getCurrentBills();
-      const total = bills.reduce((sum, b) => sum + (parseFloat(b.value) || 0), 0);
+      const mData = getCurrentMonthData();
+      const { p1: p1Pct, p2: p2Pct } = getPercentages();
 
-      const totalP1 = Math.round(total * (state.p1.pct / 100) * 100) / 100;
-      const totalP2 = Math.round((total - totalP1) * 100) / 100;
+      const inc1 = parseFloat(mData.incomeP1) || 0;
+      const inc2 = parseFloat(mData.incomeP2) || 0;
+      const totalIncome = inc1 + inc2;
 
-      // Update elements
-      document.getElementById('total-geral').textContent = formatCurrency(total);
+      // Update Incomes Visuals
+      document.getElementById('prop-text-p1').textContent = `${state.p1.name}: ${p1Pct}%`;
+      document.getElementById('prop-text-p2').textContent = `${state.p2.name}: ${p2Pct}%`;
+      document.getElementById('prop-bar-p1').style.width = `${p1Pct}%`;
+      document.getElementById('prop-bar-p2').style.width = `${p2Pct}%`;
+
+      document.getElementById('subtext-total-income').textContent = `Renda conjunta: ${formatCurrency(totalIncome)}`;
+      document.getElementById('subtext-status').textContent = mData.isManual ? 'Modo manual ativo' : (totalIncome > 0 ? 'Proporcional aos ganhos deste mês' : 'Informe os rendimentos acima');
+
+      // Bills totals
+      const totalBills = mData.bills.reduce((sum, b) => sum + (parseFloat(b.value) || 0), 0);
+      const totalP1 = Math.round(totalBills * (p1Pct / 100) * 100) / 100;
+      const totalP2 = Math.round((totalBills - totalP1) * 100) / 100;
+
+      // Summary
+      document.getElementById('total-geral').textContent = formatCurrency(totalBills);
       document.getElementById('total-p1').textContent = formatCurrency(totalP1);
       document.getElementById('total-p2').textContent = formatCurrency(totalP2);
 
       document.getElementById('summary-tag-p1').textContent = state.p1.name;
       document.getElementById('summary-tag-p2').textContent = state.p2.name;
 
-      document.getElementById('badge-p1').textContent = `${state.p1.pct}% do total`;
-      document.getElementById('badge-p2').textContent = `${state.p2.pct}% do total`;
+      document.getElementById('badge-p1').textContent = `${p1Pct}% do total`;
+      document.getElementById('badge-p2').textContent = `${p2Pct}% do total`;
 
-      document.getElementById('th-name-p1').textContent = `${state.p1.name} (${state.p1.pct}%)`;
-      document.getElementById('th-name-p2').textContent = `${state.p2.name} (${state.p2.pct}%)`;
+      // Leftover from income
+      const leftoverP1El = document.getElementById('leftover-p1');
+      const leftoverP2El = document.getElementById('leftover-p2');
 
-      // Update Detailed table
+      if (inc1 > 0) {
+        const leftover1 = inc1 - totalP1;
+        leftoverP1El.style.display = 'block';
+        leftoverP1El.textContent = `Sobra do salário: ${formatCurrency(leftover1)}`;
+        leftoverP1El.style.color = leftover1 >= 0 ? 'var(--success)' : 'var(--danger)';
+      } else {
+        leftoverP1El.style.display = 'none';
+      }
+
+      if (inc2 > 0) {
+        const leftover2 = inc2 - totalP2;
+        leftoverP2El.style.display = 'block';
+        leftoverP2El.textContent = `Sobra do salário: ${formatCurrency(leftover2)}`;
+        leftoverP2El.style.color = leftover2 >= 0 ? 'var(--success)' : 'var(--danger)';
+      } else {
+        leftoverP2El.style.display = 'none';
+      }
+
+      // Headers of table
+      document.getElementById('th-name-p1').textContent = `${state.p1.name} (${p1Pct}%)`;
+      document.getElementById('th-name-p2').textContent = `${state.p2.name} (${p2Pct}%)`;
+
+      // Detailed Table
       const tbody = document.getElementById('detailed-table-body');
       tbody.innerHTML = '';
 
-      bills.forEach(bill => {
+      mData.bills.forEach(bill => {
         const val = parseFloat(bill.value) || 0;
         if (val === 0 && !bill.name) return;
-        const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
-        const p2Val = Math.round((val - p1Val) * 100) / 100;
+        const bP1 = Math.round(val * (p1Pct / 100) * 100) / 100;
+        const bP2 = Math.round((val - bP1) * 100) / 100;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong>${escapeHtml(bill.name || 'Sem nome')}</strong></td>
           <td>${formatCurrency(val)}</td>
-          <td style="color: var(--p1-color); font-weight: 600;">${formatCurrency(p1Val)}</td>
-          <td style="color: var(--p2-color); font-weight: 600;">${formatCurrency(p2Val)}</td>
+          <td style="color: var(--p1-color); font-weight: 700;">${formatCurrency(bP1)}</td>
+          <td style="color: var(--p2-color); font-weight: 700;">${formatCurrency(bP2)}</td>
         `;
         tbody.appendChild(tr);
       });
 
-      // Update existing breakdown indicators in cards
+      // Update inner bill breakdown cards without full re-render
       const billElements = document.querySelectorAll('.bill-item');
-      bills.forEach((bill, index) => {
+      mData.bills.forEach((bill, index) => {
         if (billElements[index]) {
           const val = parseFloat(bill.value) || 0;
-          const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
-          const p2Val = Math.round((val - p1Val) * 100) / 100;
+          const bP1 = Math.round(val * (p1Pct / 100) * 100) / 100;
+          const bP2 = Math.round((val - bP1) * 100) / 100;
 
           const p1Span = billElements[index].querySelector('.bill-breakdown-col.p1 span:first-child');
           const p1Strong = billElements[index].querySelector('.bill-breakdown-col.p1 strong');
           const p2Span = billElements[index].querySelector('.bill-breakdown-col.p2 span:first-child');
           const p2Strong = billElements[index].querySelector('.bill-breakdown-col.p2 strong');
 
-          if (p1Span) p1Span.textContent = `${state.p1.name} (${state.p1.pct}%):`;
-          if (p1Strong) p1Strong.textContent = formatCurrency(p1Val);
-          if (p2Span) p2Span.textContent = `${state.p2.name} (${state.p2.pct}%):`;
-          if (p2Strong) p2Strong.textContent = formatCurrency(p2Val);
+          if (p1Span) p1Span.textContent = `${state.p1.name} (${p1Pct}%):`;
+          if (p1Strong) p1Strong.textContent = formatCurrency(bP1);
+          if (p2Span) p2Span.textContent = `${state.p2.name} (${p2Pct}%):`;
+          if (p2Strong) p2Strong.textContent = formatCurrency(bP2);
         }
       });
     }
 
     // Reports and Sharing
     function generateReportText() {
-      const monthText = document.getElementById('month-display').textContent;
-      const bills = getCurrentBills().filter(b => (parseFloat(b.value) || 0) > 0);
-      const total = bills.reduce((sum, b) => sum + (parseFloat(b.value) || 0), 0);
-      const totalP1 = Math.round(total * (state.p1.pct / 100) * 100) / 100;
-      const totalP2 = Math.round((total - totalP1) * 100) / 100;
+      const monthText = document.getElementById('month-name-text').textContent;
+      const mData = getCurrentMonthData();
+      const { p1: p1Pct, p2: p2Pct } = getPercentages();
+      const inc1 = parseFloat(mData.incomeP1) || 0;
+      const inc2 = parseFloat(mData.incomeP2) || 0;
+      const bills = mData.bills.filter(b => (parseFloat(b.value) || 0) > 0);
+      const totalBills = bills.reduce((sum, b) => sum + (parseFloat(b.value) || 0), 0);
+      const totalP1 = Math.round(totalBills * (p1Pct / 100) * 100) / 100;
+      const totalP2 = Math.round((totalBills - totalP1) * 100) / 100;
 
-      let msg = `🏠 *Divisão de Contas - ${monthText}*\n`;
-      msg += `Proporção: ${state.p1.name} (${state.p1.pct}%) / ${state.p2.name} (${state.p2.pct}%)\n`;
-      msg += `--------------------------------\n`;
+      let msg = `🏠 *Divisão Justa de Contas - ${monthText}*\n\n`;
+      if (inc1 > 0 || inc2 > 0) {
+        msg += `💵 *Rendimentos do Mês:*\n`;
+        msg += `• ${state.p1.name}: ${formatCurrency(inc1)}\n`;
+        msg += `• ${state.p2.name}: ${formatCurrency(inc2)}\n`;
+        msg += `📊 *Proporção Justa:* ${state.p1.name} ${p1Pct}% | ${state.p2.name} ${p2Pct}%\n\n`;
+      } else {
+        msg += `📊 *Proporção:* ${state.p1.name} ${p1Pct}% | ${state.p2.name} ${p2Pct}%\n\n`;
+      }
 
+      msg += `🧾 *Contas Individuais:*\n`;
       bills.forEach(b => {
         const val = parseFloat(b.value) || 0;
-        const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
-        const p2Val = Math.round((val - p1Val) * 100) / 100;
-        msg += `• *${b.name}*: ${formatCurrency(val)}\n   └ ${state.p1.name}: ${formatCurrency(p1Val)} | ${state.p2.name}: ${formatCurrency(p2Val)}\n`;
+        const bP1 = Math.round(val * (p1Pct / 100) * 100) / 100;
+        const bP2 = Math.round((val - bP1) * 100) / 100;
+        msg += `• *${b.name}* (${formatCurrency(val)})\n`;
+        msg += `   └ ${state.p1.name}: ${formatCurrency(bP1)} | ${state.p2.name}: ${formatCurrency(bP2)}\n`;
       });
 
-      msg += `--------------------------------\n`;
-      msg += `💰 *Total Geral:* ${formatCurrency(total)}\n`;
-      msg += `👤 *${state.p1.name}*: ${formatCurrency(totalP1)}\n`;
-      msg += `👤 *${state.p2.name}*: ${formatCurrency(totalP2)}\n`;
+      msg += `\n--------------------------------\n`;
+      msg += `💰 *Total das Contas:* ${formatCurrency(totalBills)}\n`;
+      msg += `👤 *${state.p1.name} Paga:* ${formatCurrency(totalP1)}`;
+      if (inc1 > 0) msg += ` _(sobra ${formatCurrency(inc1 - totalP1)})_`;
+      msg += `\n`;
+      msg += `👤 *${state.p2.name} Paga:* ${formatCurrency(totalP2)}`;
+      if (inc2 > 0) msg += ` _(sobra ${formatCurrency(inc2 - totalP2)})_`;
+      msg += `\n`;
 
       return msg;
     }
@@ -1129,44 +1209,39 @@
 
       document.getElementById('name-p1').addEventListener('input', (e) => {
         state.p1.name = e.target.value || 'Pessoa 1';
-        updatePctDisplays();
         calculate();
         saveState();
       });
 
       document.getElementById('name-p2').addEventListener('input', (e) => {
         state.p2.name = e.target.value || 'Pessoa 2';
-        updatePctDisplays();
         calculate();
         saveState();
       });
 
-      // Slider
-      const slider = document.getElementById('split-slider');
-      slider.addEventListener('input', (e) => {
+      // Income Inputs (tied to current month)
+      document.getElementById('income-p1').addEventListener('input', (e) => {
+        const mData = getCurrentMonthData();
+        mData.incomeP1 = e.target.value === '' ? null : parseFloat(e.target.value);
+        calculate();
+        saveState();
+      });
+
+      document.getElementById('income-p2').addEventListener('input', (e) => {
+        const mData = getCurrentMonthData();
+        mData.incomeP2 = e.target.value === '' ? null : parseFloat(e.target.value);
+        calculate();
+        saveState();
+      });
+
+      // Manual Slider
+      document.getElementById('split-slider').addEventListener('input', (e) => {
         const val = parseInt(e.target.value, 10);
-        state.p1.pct = val;
-        state.p2.pct = 100 - val;
-        updatePctDisplays();
+        const mData = getCurrentMonthData();
+        mData.manualP1Pct = val;
+        document.getElementById('slider-manual-val').textContent = `${val}% / ${100 - val}%`;
         calculate();
         saveState();
-      });
-
-      // Income inputs
-      document.getElementById('income-p1').addEventListener('input', () => {
-        if (state.mode === 'income') {
-          calcPctFromIncome();
-          calculate();
-          saveState();
-        }
-      });
-
-      document.getElementById('income-p2').addEventListener('input', () => {
-        if (state.mode === 'income') {
-          calcPctFromIncome();
-          calculate();
-          saveState();
-        }
       });
 
       // Add Bill
@@ -1176,11 +1251,10 @@
       document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
       document.getElementById('next-month').addEventListener('click', () => changeMonth(1));
 
-      // Initial Render
-      updatePctDisplays();
+      // Initial sync and render
+      syncInputsFromCurrentMonth();
       renderBills();
       calculate();
-      if (state.mode === 'income') setMode('income');
     });
   </script>
 </body>
