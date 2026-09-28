@@ -530,15 +530,6 @@
       color: var(--text);
     }
 
-    .leftover-badge {
-      font-size: 0.74rem;
-      margin-top: 4px;
-      padding: 4px 6px;
-      border-radius: var(--radius-sm);
-      background: rgba(52, 211, 153, 0.1);
-      color: var(--success);
-      font-weight: 600;
-    }
 
     /* Actions and share */
     .summary-actions {
@@ -751,14 +742,12 @@
           <div class="share-tag" id="summary-tag-p1">Você</div>
           <div class="share-value" id="total-p1">R$ 0,00</div>
           <div class="share-pct-badge" id="badge-p1">50% do total</div>
-          <div class="leftover-badge" id="leftover-p1" style="display: none;">Sobra: R$ 0,00</div>
         </div>
 
         <div class="share-box p2">
           <div class="share-tag" id="summary-tag-p2">Esposa</div>
           <div class="share-value" id="total-p2">R$ 0,00</div>
           <div class="share-pct-badge" id="badge-p2">50% do total</div>
-          <div class="leftover-badge" id="leftover-p2" style="display: none;">Sobra: R$ 0,00</div>
         </div>
       </div>
 
@@ -1067,28 +1056,6 @@
       document.getElementById('badge-p1').textContent = `${p1Pct}% do total`;
       document.getElementById('badge-p2').textContent = `${p2Pct}% do total`;
 
-      // Leftover from income
-      const leftoverP1El = document.getElementById('leftover-p1');
-      const leftoverP2El = document.getElementById('leftover-p2');
-
-      if (inc1 > 0) {
-        const leftover1 = inc1 - totalP1;
-        leftoverP1El.style.display = 'block';
-        leftoverP1El.textContent = `Sobra do salário: ${formatCurrency(leftover1)}`;
-        leftoverP1El.style.color = leftover1 >= 0 ? 'var(--success)' : 'var(--danger)';
-      } else {
-        leftoverP1El.style.display = 'none';
-      }
-
-      if (inc2 > 0) {
-        const leftover2 = inc2 - totalP2;
-        leftoverP2El.style.display = 'block';
-        leftoverP2El.textContent = `Sobra do salário: ${formatCurrency(leftover2)}`;
-        leftoverP2El.style.color = leftover2 >= 0 ? 'var(--success)' : 'var(--danger)';
-      } else {
-        leftoverP2El.style.display = 'none';
-      }
-
       // Headers of table
       document.getElementById('th-name-p1').textContent = `${state.p1.name} (${p1Pct}%)`;
       document.getElementById('th-name-p2').textContent = `${state.p2.name} (${p2Pct}%)`;
@@ -1167,12 +1134,8 @@
 
       msg += `\n--------------------------------\n`;
       msg += `💰 *Total das Contas:* ${formatCurrency(totalBills)}\n`;
-      msg += `👤 *${state.p1.name} Paga:* ${formatCurrency(totalP1)}`;
-      if (inc1 > 0) msg += ` _(sobra ${formatCurrency(inc1 - totalP1)})_`;
-      msg += `\n`;
-      msg += `👤 *${state.p2.name} Paga:* ${formatCurrency(totalP2)}`;
-      if (inc2 > 0) msg += ` _(sobra ${formatCurrency(inc2 - totalP2)})_`;
-      msg += `\n`;
+      msg += `👤 *${state.p1.name} Paga:* ${formatCurrency(totalP1)}\n`;
+      msg += `👤 *${state.p2.name} Paga:* ${formatCurrency(totalP2)}\n`;
 
       return msg;
     }
