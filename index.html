@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divisão Justa de Contas do Casal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #131c2e;
+      --card-subtle: #1a253c;
+      --border: #23334d;
+      --border-focus: #38bdf8;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --p1-color: #38bdf8;
+      --p1-bg: rgba(56, 189, 248, 0.12);
+      --p2-color: #f472b6;
+      --p2-bg: rgba(244, 114, 182, 0.12);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --success: #34d399;
+      --danger: #f87171;
+      --danger-bg: rgba(248, 113, 113, 0.12);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 60px;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    header h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    /* Month Selector */
+    .month-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 10px 16px;
+    }
+
+    .month-nav-btn {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .month-nav-btn:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+
+    .current-month-display {
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: capitalize;
+      letter-spacing: -0.01em;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Split Configuration */
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: var(--card-subtle);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+    }
+
+    .mode-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-tab-btn.active {
+      background: var(--card-bg);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .couple-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .partner-card {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .partner-card.p1 { border-top: 3px solid var(--p1-color); }
+    .partner-card.p2 { border-top: 3px solid var(--p2-color); }
+
+    .partner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .partner-name-input {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.95rem;
+      width: 100%;
+      outline: none;
+      border-bottom: 1px dashed transparent;
+      padding-bottom: 2px;
+    }
+
+    .partner-name-input:focus {
+      border-color: var(--primary);
+    }
+
+    .partner-pct-display {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    .p1 .partner-pct-display { color: var(--p1-color); }
+    .p2 .partner-pct-display { color: var(--p2-color); }
+
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--p1-color) var(--slider-pct, 70%), var(--p2-color) var(--slider-pct, 70%));
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--card-bg);
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+
+    .quick-presets {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .preset-btn {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    /* Salary Input Mode */
+    .salary-inputs {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .salary-inputs.active {
+      display: grid;
+    }
+
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-field-group label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .currency-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-input-wrap span {
+      position: absolute;
+      left: 10px;
+      color: var(--text-dim);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .currency-input-wrap input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 8px 8px 34px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .currency-input-wrap input:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* Accounts List */
+    .bills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .bill-item {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .bill-item:hover {
+      border-color: #3b5072;
+    }
+
+    .bill-top-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .bill-name-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .bill-name-input:focus {
+      border-color: var(--border-focus);
+    }
+
+    .bill-val-wrap {
+      width: 130px;
+    }
+
+    .delete-bill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+
+    .delete-bill-btn:hover {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    /* Individual Breakdown per bill */
+    .bill-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 0.78rem;
+    }
+
+    .bill-breakdown-col {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bill-breakdown-col.p1 span:first-child { color: var(--p1-color); font-weight: 600; }
+    .bill-breakdown-col.p2 span:first-child { color: var(--p2-color); font-weight: 600; }
+    .bill-breakdown-col strong { color: var(--text); font-weight: 700; }
+
+    .add-bill-btn {
+      width: 100%;
+      background: var(--card-subtle);
+      border: 1px dashed var(--border);
+      color: var(--primary);
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .add-bill-btn:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: var(--primary);
+    }
+
+    /* Monthly Summary */
+    .total-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .total-banner span {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .total-banner strong {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .shares {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .share-box {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .share-box.p1 {
+      border-top: 4px solid var(--p1-color);
+      background: linear-gradient(180deg, var(--p1-bg) 0%, var(--card-subtle) 100%);
+    }
+
+    .share-box.p2 {
+      border-top: 4px solid var(--p2-color);
+      background: linear-gradient(180deg, var(--p2-bg) 0%, var(--card-subtle) 100%);
+    }
+
+    .share-tag {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .share-box.p1 .share-tag { color: var(--p1-color); }
+    .share-box.p2 .share-tag { color: var(--p2-color); }
+
+    .share-value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .share-pct-badge {
+      display: inline-block;
+      align-self: center;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.3);
+      font-weight: 700;
+    }
+
+    /* Actions and share */
+    .summary-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .action-btn.whatsapp {
+      background: #25d366;
+      color: #0b2b16;
+    }
+    .action-btn.whatsapp:hover {
+      background: #20bd5a;
+    }
+
+    .action-btn.copy {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .action-btn.copy:hover {
+      background: var(--border);
+    }
+
+    /* Table preview toggle */
+    .table-container {
+      margin-top: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .detailed-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .detailed-table th {
+      text-align: left;
+      color: var(--text-muted);
+      padding: 8px 6px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detailed-table td {
+      padding: 10px 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--text);
+      color: var(--bg);
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 16px 12px 40px; }
+      .shares { grid-template-columns: 1fr; }
+      .couple-grid { grid-template-columns: 1fr; }
+      .salary-inputs { grid-template-columns: 1fr; }
+      .summary-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">Finanças do Casal</div>
+      <h1>Divisão Justa de Contas</h1>
+      <p>Defina a proporção e saiba o valor individual de cada conta por mês.</p>
+    </header>
+
+    <!-- Month Navigation -->
+    <div class="month-bar">
+      <button class="month-nav-btn" id="prev-month" title="Mês anterior">←</button>
+      <div class="current-month-display" id="month-display">Mês / Ano</div>
+      <button class="month-nav-btn" id="next-month" title="Próximo mês">→</button>
+    </div>
+
+    <!-- Proportion / Fairness Configuration -->
+    <div class="card">
+      <div class="card-title">
+        <span>Proporção da Divisão</span>
+        <span style="font-size: 0.78rem; font-weight: normal; color: var(--text-muted);" id="split-mode-label">Ajuste manual</span>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-tab-btn active" id="tab-pct" onclick="setMode('pct')">Por Porcentagem</button>
+        <button class="mode-tab-btn" id="tab-income" onclick="setMode('income')">Proporcional à Renda</button>
+      </div>
+
+      <!-- Partner Cards (Names and current %) -->
+      <div class="couple-grid">
+        <div class="partner-card p1">
+          <div class="partner-header">
+            <input type="text" id="name-p1" class="partner-name-input" value="Você" placeholder="Nome" />
+            <div class="partner-pct-display" id="display-p1-pct">70%</div>
+          </div>
+          <div class="input-field-group salary-group" style="display: none;">
+            <label>Renda Líquida</label>
+            <div class="currency-input-wrap">
+              <span>R$</span>
+              <input type="number" id="income-p1" placeholder="0,00" step="100" />
+            </div>
+          </div>
+        </div>
+
+        <div class="partner-card p2">
+          <div class="partner-header">
+            <input type="text" id="name-p2" class="partner-name-input" value="Esposa" placeholder="Nome" />
+            <div class="partner-pct-display" id="display-p2-pct">30%</div>
+          </div>
+          <div class="input-field-group salary-group" style="display: none;">
+            <label>Renda Líquida</label>
+            <div class="currency-input-wrap">
+              <span>R$</span>
+              <input type="number" id="income-p2" placeholder="0,00" step="100" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider for direct percentage -->
+      <div id="pct-controls">
+        <div class="slider-container">
+          <input type="range" id="split-slider" min="0" max="100" value="70" step="1" />
+          <div class="slider-labels">
+            <span id="slider-label-p1">Você: 70%</span>
+            <span id="slider-label-p2">Esposa: 30%</span>
+          </div>
+        </div>
+
+        <div class="quick-presets">
+          <span style="font-size: 0.75rem; color: var(--text-dim); margin-right: 4px; align-self: center;">Atalhos:</span>
+          <button class="preset-btn" onclick="applyPreset(50)">50% / 50%</button>
+          <button class="preset-btn" onclick="applyPreset(60)">60% / 40%</button>
+          <button class="preset-btn" onclick="applyPreset(70)">70% / 30%</button>
+          <button class="preset-btn" onclick="applyPreset(80)">80% / 20%</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bills List -->
+    <div class="card">
+      <div class="card-title">
+        <span>Contas do Mês</span>
+        <span style="font-size: 0.78rem; font-weight: normal; color: var(--text-muted);" id="bills-count">0 contas</span>
+      </div>
+
+      <div class="bills-list" id="bills-container">
+        <!-- Bills rendered here via JS -->
+      </div>
+
+      <button class="add-bill-btn" id="add-bill-btn">
+        <span style="font-size: 1.2rem; line-height: 1;">+</span> Adicionar Nova Conta
+      </button>
+    </div>
+
+    <!-- Monthly Summary -->
+    <div class="card">
+      <div class="total-banner">
+        <span>Total das Contas do Mês</span>
+        <strong id="total-geral">R$ 0,00</strong>
+      </div>
+
+      <div class="shares">
+        <div class="share-box p1">
+          <div class="share-tag" id="summary-tag-p1">Você</div>
+          <div class="share-value" id="total-p1">R$ 0,00</div>
+          <div class="share-pct-badge" id="badge-p1">70% do total</div>
+        </div>
+
+        <div class="share-box p2">
+          <div class="share-tag" id="summary-tag-p2">Esposa</div>
+          <div class="share-value" id="total-p2">R$ 0,00</div>
+          <div class="share-pct-badge" id="badge-p2">30% do total</div>
+        </div>
+      </div>
+
+      <div class="summary-actions">
+        <button class="action-btn whatsapp" onclick="shareWhatsApp()">
+          <span>📱</span> Enviar no WhatsApp
+        </button>
+        <button class="action-btn copy" onclick="copyReport()">
+          <span>📋</span> Copiar Relatório
+        </button>
+      </div>
+
+      <!-- Individual breakdown table -->
+      <div class="table-container">
+        <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Detalhamento Conta por Conta</div>
+        <table class="detailed-table">
+          <thead>
+            <tr>
+              <th>Conta</th>
+              <th>Total</th>
+              <th id="th-name-p1">Você</th>
+              <th id="th-name-p2">Esposa</th>
+            </tr>
+          </thead>
+          <tbody id="detailed-table-body">
+            <!-- Rows dynamically created -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado para a área de transferência!</div>
+
+  <script>
+    // State management
+    const state = {
+      currentDate: new Date(),
+      mode: 'pct', // 'pct' | 'income'
+      p1: { name: 'Você', pct: 70, income: 0 },
+      p2: { name: 'Esposa', pct: 30, income: 0 },
+      monthsData: {}
+    };
+
+    const DEFAULT_BILLS = [
+      { id: '1', name: 'Aluguel (fixo)', value: 1000 },
+      { id: '2', name: 'Conta de Luz', value: 0 },
+      { id: '3', name: 'Conta de Água', value: 0 },
+      { id: '4', name: 'Internet / Wi-Fi', value: 0 },
+      { id: '5', name: 'Supermercado', value: 0 },
+      { id: '6', name: 'Outros Gastos Rateados', value: 0 }
+    ];
+
+    function getMonthKey(date) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function formatCurrency(val) {
+      return (Number(val) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Load from LocalStorage
+    function loadSavedState() {
+      try {
+        const saved = localStorage.getItem('divisao_contas_app_v1');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.p1) state.p1 = parsed.p1;
+          if (parsed.p2) state.p2 = parsed.p2;
+          if (parsed.mode) state.mode = parsed.mode;
+          if (parsed.monthsData) state.monthsData = parsed.monthsData;
+        }
+      } catch (e) {
+        console.error('Erro ao carregar dados:', e);
+      }
+
+      // Initialize current month if empty
+      const key = getMonthKey(state.currentDate);
+      if (!state.monthsData[key]) {
+        state.monthsData[key] = JSON.parse(JSON.stringify(DEFAULT_BILLS));
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('divisao_contas_app_v1', JSON.stringify({
+          p1: state.p1,
+          p2: state.p2,
+          mode: state.mode,
+          monthsData: state.monthsData
+        }));
+      } catch (e) {
+        console.error('Erro ao salvar dados:', e);
+      }
+    }
+
+    // Month Navigation
+    function updateMonthDisplay() {
+      const monthNames = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+      ];
+      const m = monthNames[state.currentDate.getMonth()];
+      const y = state.currentDate.getFullYear();
+      document.getElementById('month-display').textContent = `${m} de ${y}`;
+    }
+
+    function changeMonth(diff) {
+      state.currentDate.setMonth(state.currentDate.getMonth() + diff);
+      const key = getMonthKey(state.currentDate);
+      if (!state.monthsData[key]) {
+        // Clone defaults or previous month structure
+        const prevKey = getMonthKey(new Date(state.currentDate.getFullYear(), state.currentDate.getMonth() - diff, 1));
+        if (state.monthsData[prevKey]) {
+          // Carry over bill names with 0 value (except rent)
+          state.monthsData[key] = state.monthsData[prevKey].map(b => ({
+            id: String(Date.now() + Math.random()),
+            name: b.name,
+            value: b.name.toLowerCase().includes('aluguel') ? b.value : 0
+          }));
+        } else {
+          state.monthsData[key] = JSON.parse(JSON.stringify(DEFAULT_BILLS));
+        }
+      }
+      updateMonthDisplay();
+      renderBills();
+      calculate();
+      saveState();
+    }
+
+    // Mode management
+    function setMode(newMode) {
+      state.mode = newMode;
+      document.getElementById('tab-pct').classList.toggle('active', newMode === 'pct');
+      document.getElementById('tab-income').classList.toggle('active', newMode === 'income');
+      
+      const salaryGroups = document.querySelectorAll('.salary-group');
+      salaryGroups.forEach(el => el.style.display = newMode === 'income' ? 'flex' : 'none');
+      
+      document.getElementById('pct-controls').style.display = newMode === 'pct' ? 'block' : 'none';
+      document.getElementById('split-mode-label').textContent = newMode === 'pct' ? 'Ajuste manual' : 'Cálculo por renda';
+      
+      if (newMode === 'income') {
+        calcPctFromIncome();
+      }
+      calculate();
+      saveState();
+    }
+
+    function calcPctFromIncome() {
+      const inc1 = parseFloat(document.getElementById('income-p1').value) || 0;
+      const inc2 = parseFloat(document.getElementById('income-p2').value) || 0;
+      const totalIncome = inc1 + inc2;
+
+      if (totalIncome > 0) {
+        state.p1.pct = Math.round((inc1 / totalIncome) * 100);
+        state.p2.pct = 100 - state.p1.pct;
+      }
+      state.p1.income = inc1;
+      state.p2.income = inc2;
+      updatePctDisplays();
+    }
+
+    function updatePctDisplays() {
+      document.getElementById('display-p1-pct').textContent = `${state.p1.pct}%`;
+      document.getElementById('display-p2-pct').textContent = `${state.p2.pct}%`;
+      document.getElementById('slider-label-p1').textContent = `${state.p1.name}: ${state.p1.pct}%`;
+      document.getElementById('slider-label-p2').textContent = `${state.p2.name}: ${state.p2.pct}%`;
+      document.getElementById('split-slider').value = state.p1.pct;
+      document.documentElement.style.setProperty('--slider-pct', `${state.p1.pct}%`);
+    }
+
+    function applyPreset(p1Pct) {
+      state.p1.pct = p1Pct;
+      state.p2.pct = 100 - p1Pct;
+      updatePctDisplays();
+      calculate();
+      saveState();
+    }
+
+    // Bills handling
+    function getCurrentBills() {
+      const key = getMonthKey(state.currentDate);
+      if (!state.monthsData[key]) {
+        state.monthsData[key] = JSON.parse(JSON.stringify(DEFAULT_BILLS));
+      }
+      return state.monthsData[key];
+    }
+
+    function renderBills() {
+      const bills = getCurrentBills();
+      const container = document.getElementById('bills-container');
+      container.innerHTML = '';
+
+      document.getElementById('bills-count').textContent = `${bills.length} conta${bills.length === 1 ? '' : 's'}`;
+
+      bills.forEach((bill, index) => {
+        const val = parseFloat(bill.value) || 0;
+        const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
+        const p2Val = Math.round((val - p1Val) * 100) / 100;
+
+        const billEl = document.createElement('div');
+        billEl.className = 'bill-item';
+        billEl.innerHTML = `
+          <div class="bill-top-row">
+            <input type="text" class="bill-name-input" value="${escapeHtml(bill.name)}" placeholder="Nome da conta (ex: Luz)" onchange="updateBillName(${index}, this.value)" />
+            <div class="currency-input-wrap bill-val-wrap">
+              <span>R$</span>
+              <input type="number" step="0.01" value="${bill.value === 0 ? '' : bill.value}" placeholder="0,00" oninput="updateBillValue(${index}, this.value)" />
+            </div>
+            <button class="delete-bill-btn" title="Remover conta" onclick="deleteBill(${index})">✕</button>
+          </div>
+          <div class="bill-breakdown">
+            <div class="bill-breakdown-col p1">
+              <span>${escapeHtml(state.p1.name)} (${state.p1.pct}%):</span>
+              <strong>${formatCurrency(p1Val)}</strong>
+            </div>
+            <div class="bill-breakdown-col p2">
+              <span>${escapeHtml(state.p2.name)} (${state.p2.pct}%):</span>
+              <strong>${formatCurrency(p2Val)}</strong>
+            </div>
+          </div>
+        `;
+        container.appendChild(billEl);
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function updateBillName(index, name) {
+      const bills = getCurrentBills();
+      if (bills[index]) {
+        bills[index].name = name;
+        calculate();
+        saveState();
+      }
+    }
+
+    function updateBillValue(index, val) {
+      const bills = getCurrentBills();
+      if (bills[index]) {
+        bills[index].value = parseFloat(val) || 0;
+        calculate();
+        saveState();
+      }
+    }
+
+    function addBill() {
+      const bills = getCurrentBills();
+      bills.push({
+        id: String(Date.now()),
+        name: 'Nova Conta',
+        value: 0
+      });
+      renderBills();
+      calculate();
+      saveState();
+    }
+
+    function deleteBill(index) {
+      const bills = getCurrentBills();
+      bills.splice(index, 1);
+      renderBills();
+      calculate();
+      saveState();
+    }
+
+    // Calculations
+    function calculate() {
+      const bills = getCurrentBills();
+      const total = bills.reduce((sum, b) => sum + (parseFloat(b.value) || 0), 0);
+
+      const totalP1 = Math.round(total * (state.p1.pct / 100) * 100) / 100;
+      const totalP2 = Math.round((total - totalP1) * 100) / 100;
+
+      // Update elements
+      document.getElementById('total-geral').textContent = formatCurrency(total);
+      document.getElementById('total-p1').textContent = formatCurrency(totalP1);
+      document.getElementById('total-p2').textContent = formatCurrency(totalP2);
+
+      document.getElementById('summary-tag-p1').textContent = state.p1.name;
+      document.getElementById('summary-tag-p2').textContent = state.p2.name;
+
+      document.getElementById('badge-p1').textContent = `${state.p1.pct}% do total`;
+      document.getElementById('badge-p2').textContent = `${state.p2.pct}% do total`;
+
+      document.getElementById('th-name-p1').textContent = `${state.p1.name} (${state.p1.pct}%)`;
+      document.getElementById('th-name-p2').textContent = `${state.p2.name} (${state.p2.pct}%)`;
+
+      // Update Detailed table
+      const tbody = document.getElementById('detailed-table-body');
+      tbody.innerHTML = '';
+
+      bills.forEach(bill => {
+        const val = parseFloat(bill.value) || 0;
+        if (val === 0 && !bill.name) return;
+        const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
+        const p2Val = Math.round((val - p1Val) * 100) / 100;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(bill.name || 'Sem nome')}</strong></td>
+          <td>${formatCurrency(val)}</td>
+          <td style="color: var(--p1-color); font-weight: 600;">${formatCurrency(p1Val)}</td>
+          <td style="color: var(--p2-color); font-weight: 600;">${formatCurrency(p2Val)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Update existing breakdown indicators in cards
+      const billElements = document.querySelectorAll('.bill-item');
+      bills.forEach((bill, index) => {
+        if (billElements[index]) {
+          const val = parseFloat(bill.value) || 0;
+          const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
+          const p2Val = Math.round((val - p1Val) * 100) / 100;
+
+          const p1Span = billElements[index].querySelector('.bill-breakdown-col.p1 span:first-child');
+          const p1Strong = billElements[index].querySelector('.bill-breakdown-col.p1 strong');
+          const p2Span = billElements[index].querySelector('.bill-breakdown-col.p2 span:first-child');
+          const p2Strong = billElements[index].querySelector('.bill-breakdown-col.p2 strong');
+
+          if (p1Span) p1Span.textContent = `${state.p1.name} (${state.p1.pct}%):`;
+          if (p1Strong) p1Strong.textContent = formatCurrency(p1Val);
+          if (p2Span) p2Span.textContent = `${state.p2.name} (${state.p2.pct}%):`;
+          if (p2Strong) p2Strong.textContent = formatCurrency(p2Val);
+        }
+      });
+    }
+
+    // Reports and Sharing
+    function generateReportText() {
+      const monthText = document.getElementById('month-display').textContent;
+      const bills = getCurrentBills().filter(b => (parseFloat(b.value) || 0) > 0);
+      const total = bills.reduce((sum, b) => sum + (parseFloat(b.value) || 0), 0);
+      const totalP1 = Math.round(total * (state.p1.pct / 100) * 100) / 100;
+      const totalP2 = Math.round((total - totalP1) * 100) / 100;
+
+      let msg = `🏠 *Divisão de Contas - ${monthText}*\n`;
+      msg += `Proporção: ${state.p1.name} (${state.p1.pct}%) / ${state.p2.name} (${state.p2.pct}%)\n`;
+      msg += `--------------------------------\n`;
+
+      bills.forEach(b => {
+        const val = parseFloat(b.value) || 0;
+        const p1Val = Math.round(val * (state.p1.pct / 100) * 100) / 100;
+        const p2Val = Math.round((val - p1Val) * 100) / 100;
+        msg += `• *${b.name}*: ${formatCurrency(val)}\n   └ ${state.p1.name}: ${formatCurrency(p1Val)} | ${state.p2.name}: ${formatCurrency(p2Val)}\n`;
+      });
+
+      msg += `--------------------------------\n`;
+      msg += `💰 *Total Geral:* ${formatCurrency(total)}\n`;
+      msg += `👤 *${state.p1.name}*: ${formatCurrency(totalP1)}\n`;
+      msg += `👤 *${state.p2.name}*: ${formatCurrency(totalP2)}\n`;
+
+      return msg;
+    }
+
+    function shareWhatsApp() {
+      const text = encodeURIComponent(generateReportText());
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function copyReport() {
+      const text = generateReportText();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Resumo copiado com sucesso!');
+      }).catch(() => {
+        showToast('Erro ao copiar.');
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // Init events
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedState();
+      updateMonthDisplay();
+
+      // Names
+      document.getElementById('name-p1').value = state.p1.name;
+      document.getElementById('name-p2').value = state.p2.name;
+
+      document.getElementById('name-p1').addEventListener('input', (e) => {
+        state.p1.name = e.target.value || 'Pessoa 1';
+        updatePctDisplays();
+        calculate();
+        saveState();
+      });
+
+      document.getElementById('name-p2').addEventListener('input', (e) => {
+        state.p2.name = e.target.value || 'Pessoa 2';
+        updatePctDisplays();
+        calculate();
+        saveState();
+      });
+
+      // Slider
+      const slider = document.getElementById('split-slider');
+      slider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        state.p1.pct = val;
+        state.p2.pct = 100 - val;
+        updatePctDisplays();
+        calculate();
+        saveState();
+      });
+
+      // Income inputs
+      document.getElementById('income-p1').addEventListener('input', () => {
+        if (state.mode === 'income') {
+          calcPctFromIncome();
+          calculate();
+          saveState();
+        }
+      });
+
+      document.getElementById('income-p2').addEventListener('input', () => {
+        if (state.mode === 'income') {
+          calcPctFromIncome();
+          calculate();
+          saveState();
+        }
+      });
+
+      // Add Bill
+      document.getElementById('add-bill-btn').addEventListener('click', addBill);
+
+      // Month Nav
+      document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
+      document.getElementById('next-month').addEventListener('click', () => changeMonth(1));
+
+      // Initial Render
+      updatePctDisplays();
+      renderBills();
+      calculate();
+      if (state.mode === 'income') setMode('income');
+    });
+  </script>
+</body>
+</html>

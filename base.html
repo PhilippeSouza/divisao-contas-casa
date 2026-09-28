@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divisor de Contas 70/30</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --primary: #38bdf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent-1: #60a5fa;
+      --accent-2: #f472b6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .input-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper span {
+      position: absolute;
+      left: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px 10px 42px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--primary);
+    }
+
+    .results {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .total-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .total-banner span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .total-banner strong {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+
+    .shares {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .share-box {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    .share-box.você {
+      border-top: 3px solid var(--accent-1);
+    }
+
+    .share-box.esposa {
+      border-top: 3px solid var(--accent-2);
+    }
+
+    .share-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .share-box.você .share-tag {
+      color: var(--accent-1);
+    }
+
+    .share-box.esposa .share-tag {
+      color: var(--accent-2);
+    }
+
+    .share-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Divisão de Contas</h1>
+      <p>Proporção 70% você / 30% esposa</p>
+    </header>
+
+    <div class="card">
+      <div class="input-group">
+        <label for="aluguel">Aluguel (fixo)</label>
+        <div class="input-wrapper">
+          <span>R$</span>
+          <input type="number" id="aluguel" value="1000" step="0.01" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="luz">Conta de Luz</label>
+        <div class="input-wrapper">
+          <span>R$</span>
+          <input type="number" id="luz" placeholder="0,00" step="0.01" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="agua">Conta de Água</label>
+        <div class="input-wrapper">
+          <span>R$</span>
+          <input type="number" id="agua" placeholder="0,00" step="0.01" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="outros">Outros Gastos Rateados</label>
+        <div class="input-wrapper">
+          <span>R$</span>
+          <input type="number" id="outros" placeholder="0,00" step="0.01" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card results">
+      <div class="total-banner">
+        <span>Total a pagar</span>
+        <strong id="total-geral">R$ 0,00</strong>
+      </div>
+
+      <div class="shares">
+        <div class="share-box você">
+          <div class="share-tag">Você (70%)</div>
+          <div class="share-value" id="parte-voce">R$ 0,00</div>
+        </div>
+        <div class="share-box esposa">
+          <div class="share-tag">Esposa (30%)</div>
+          <div class="share-value" id="parte-esposa">R$ 0,00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const inputs = ['aluguel', 'luz', 'agua', 'outros'].map(id => document.getElementById(id));
+    const totalEl = document.getElementById('total-geral');
+    const voceEl = document.getElementById('parte-voce');
+    const esposaEl = document.getElementById('parte-esposa');
+
+    function formatCurrency(val) {
+      return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function calculate() {
+      const total = inputs.reduce((sum, input) => {
+        const val = parseFloat(input.value) || 0;
+        return sum + val;
+      }, 0);
+
+      // Cálculo proporcional evitando divergências de centavos
+      const parteVoce = Math.round(total * 0.70 * 100) / 100;
+      const parteEsposa = Math.round((total - parteVoce) * 100) / 100;
+
+      totalEl.textContent = formatCurrency(total);
+      voceEl.textContent = formatCurrency(parteVoce);
+      esposaEl.textContent = formatCurrency(parteEsposa);
+    }
+
+    inputs.forEach(input => input.addEventListener('input', calculate));
+    calculate();
+  </script>
+</body>
+</html>
